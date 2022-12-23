@@ -22,6 +22,10 @@ public class AppGroup {
 
     private String title;
 
+    private String anyOneCanJoinWithoutRequest;  //flag to make group public
+
+    private String groupIsFinished;
+
     @ManyToOne
     private Restaurant restaurant;
 
