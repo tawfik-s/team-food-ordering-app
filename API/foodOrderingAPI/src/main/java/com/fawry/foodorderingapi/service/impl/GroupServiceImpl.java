@@ -39,7 +39,7 @@ public class GroupServiceImpl implements GroupService {
     public AppGroup addGroup(Long userId, NewGroupDTO newGroup) {
         AppUser appUser = userRepo.findById(userId).orElseThrow(UserNotFoundException::new);
         AppGroup appGroup = newGroupDTOAndGroupEntityMapper.NewGroupDTOToAppGroup(newGroup);
-        Restaurant restaurant=restaurantRepo.findById(newGroup.getRestaurantId()).orElseThrow(RestaurantNotFoundException::new);
+        Restaurant restaurant = restaurantRepo.findById(newGroup.getRestaurantId()).orElseThrow(RestaurantNotFoundException::new);
         appGroup.setGroupIsFinished("false");
         appGroup.setRestaurant(restaurant);
         appGroup = groupRepo.save(appGroup);
@@ -61,12 +61,19 @@ public class GroupServiceImpl implements GroupService {
     public void userJoinGroup(Long groupId, Long userId) {
         AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(GroupNotFoundException::new);
         AppUser appUser = userRepo.findById(userId).orElseThrow(UserNotFoundException::new);
-        if (appGroup.getAnyOneCanJoinWithoutRequest().equals("true")) {
-            appGroup.getUsers().add(appUser);
-        } else {
-            appGroup.getUsersRequestToJoin().add(appUser);
+        appUser.getOwnedGroups()
+                .stream()
+                .filter(appGroup1 -> appGroup1.getId() == groupId);
+//         System.out.println(appUser.getOwnedGroups().isEmpty());
+        //TODO chick is admin group
+        if (appUser.getOwnedGroups().isEmpty()) {
+            if (appGroup.getAnyOneCanJoinWithoutRequest().equals("true")) {
+                appGroup.getUsers().add(appUser);
+            } else {
+                appGroup.getUsersRequestToJoin().add(appUser);
+            }
+            groupRepo.save(appGroup);
         }
-        groupRepo.save(appGroup);
     }
 
     @Override
@@ -74,9 +81,16 @@ public class GroupServiceImpl implements GroupService {
     public void adminAcceptUserAtGroup(Long groupId, Long newUserId) {
         AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(GroupNotFoundException::new);
         AppUser appUser = userRepo.findById(newUserId).orElseThrow(UserNotFoundException::new);
-        appGroup.getUsersRequestToJoin().removeIf((user) -> user.getId() == appUser.getId());
-        appGroup.getUsers().add(appUser);
-        groupRepo.save(appGroup);
+        List<AppUser> list = appGroup.getUsersRequestToJoin()
+                .stream()
+                .filter(appUser1 -> appUser1.getId() == newUserId)
+                .collect(Collectors.toList());
+        //TODO Chick user in Users Request To Join
+        if (!list.isEmpty()) {
+            appGroup.getUsersRequestToJoin().removeIf((user) -> user.getId() == appUser.getId());
+            appGroup.getUsers().add(appUser);
+            groupRepo.save(appGroup);
+        }
     }
 
     @Override
