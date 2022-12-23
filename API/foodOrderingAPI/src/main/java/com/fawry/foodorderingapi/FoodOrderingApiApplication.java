@@ -29,15 +29,15 @@ public class FoodOrderingApiApplication {
     @Bean
     CommandLineRunner run(GroupService groupService){
         return args -> {
-//          AppUser appUser1=  appUserRepo.save(new AppUser(null,"usef","0100232342","1234",null,null));
-//          AppUser appUser2=   appUserRepo.save(new AppUser(null,"tawfeek","0100232342","1234",null,null));
-//          System.out.println(appUser1);
-//          System.out.println(appUser2);
-//          Restaurant restaurant= restaurantRepo.save(new Restaurant(null,"tarek","110077",null));
-//            System.out.println(restaurant);
-//          AppGroup appGroup1=groupService.addGroup(appUser1.getId(),new NewGroupDTO("group1","true",restaurant.getId()));
-//            System.out.println(appGroup1);
-//          groupService.userJoinGroup(appGroup1.getId(),appUser2.getId());
+          AppUser appUser1=  appUserRepo.save(new AppUser(null,"usef","0100232342","1234",null,null));
+          AppUser appUser2=   appUserRepo.save(new AppUser(null,"tawfeek","0100232342","1234",null,null));
+          System.out.println(appUser1);
+          System.out.println(appUser2);
+          Restaurant restaurant= restaurantRepo.save(new Restaurant(null,"tarek","110077",null));
+            System.out.println(restaurant);
+          AppGroup appGroup1=groupService.addGroup(appUser1.getId(),new NewGroupDTO("group1","true",restaurant.getId()));
+            System.out.println(appGroup1);
+          groupService.userJoinGroup(appGroup1.getId(),appUser2.getId());
 
         };
     }
