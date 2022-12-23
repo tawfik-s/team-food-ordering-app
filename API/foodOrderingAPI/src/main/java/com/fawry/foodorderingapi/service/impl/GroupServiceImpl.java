@@ -42,16 +42,8 @@ public class GroupServiceImpl implements GroupService {
         Restaurant restaurant=restaurantRepo.findById(newGroup.getRestaurantId()).orElseThrow(RestaurantNotFoundException::new);
         appGroup.setGroupIsFinished("false");
         appGroup.setRestaurant(restaurant);
-        appGroup.setUsers(new ArrayList<>());
-        appGroup.setUsersRequestToJoin(new ArrayList<>());
         appGroup = groupRepo.save(appGroup);
-        List<AppGroup> ownedGroups=appUser.getOwnedGroups();
-        if(ownedGroups==null){
-            ownedGroups=new ArrayList<>();
-        }
-        System.out.println(appGroup.getId());
-        ownedGroups.add(appGroup);
-        appUser.setOwnedGroups(ownedGroups);
+        appUser.getOwnedGroups().add(appGroup);
         userRepo.save(appUser);
         return appGroup;
     }
