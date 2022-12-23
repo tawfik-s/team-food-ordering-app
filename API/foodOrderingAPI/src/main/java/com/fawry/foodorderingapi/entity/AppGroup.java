@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Group {
+public class AppGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +28,10 @@ public class Group {
     @ManyToMany
     private List<AppUser> Users;
 
+    @ManyToMany
+    private List<AppUser> UsersRequestToJoin;
+
     @OneToMany
-    private List<SubOrder> orders;
+    private List<SubOrder> order;
 
 }

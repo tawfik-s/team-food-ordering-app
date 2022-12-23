@@ -18,6 +18,8 @@ public class SubOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String subOrderNotes;
+
     @OneToMany
     private List<SubOrderItem> items;
 }

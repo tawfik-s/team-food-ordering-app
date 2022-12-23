@@ -26,6 +26,6 @@ public class AppUser {
     private String password;
 
     @OneToMany
-    private List<Group> OwnedGroups;
+    private List<AppGroup> OwnedGroups;
 
 }
