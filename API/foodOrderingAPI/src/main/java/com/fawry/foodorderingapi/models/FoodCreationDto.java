@@ -12,4 +12,6 @@ public class FoodCreationDto {
     private String name;
 
     private float price;
+
+    private String image;
 }

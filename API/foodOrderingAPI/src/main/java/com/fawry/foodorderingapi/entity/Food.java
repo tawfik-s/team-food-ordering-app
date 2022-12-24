@@ -24,5 +24,7 @@ public class Food {
 
     private float price;
 
+    private String image;
+
 
 }

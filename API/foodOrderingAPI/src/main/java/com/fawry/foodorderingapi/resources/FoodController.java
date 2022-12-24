@@ -32,7 +32,7 @@ public class FoodController {
     public FoodCreationDto addFood (@RequestBody FoodCreationDto foodDto){
 
         Food food = foodMapper.mapToEntity(foodDto);
-        FoodCreationDto foodCreationDto = foodMapper.mapToDto(foodService.addProduct(food));
+        FoodCreationDto foodCreationDto = foodMapper.mapToDto(foodService.addFood(food));
         return foodCreationDto;
 
     }
@@ -41,9 +41,7 @@ public class FoodController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Food> getAllFood(){
-
         return foodService.getAllFood();
-
 }
 
     @GetMapping("/{id}")

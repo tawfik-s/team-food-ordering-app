@@ -33,7 +33,7 @@ public class OrderService implements com.fawry.foodorderingapi.service.OrderServ
         for(FoodItemDto foodItemDto : orderDto.getFood()){
             Food fooditem = foodService.getFoodById(foodItemDto.getItemId());
             order.getItems().add(new SubOrder(foodItemDto.getQuantity(),fooditem,order,foodItemDto.getComment()));
-            foodRepo.saveAndFlush(fooditem);
+
         }
 
             orderRepo.saveAndFlush(order);
