@@ -6,10 +6,11 @@ import com.fawry.foodorderingapi.model.FoodDto;
 import com.fawry.foodorderingapi.service.FoodService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @RestController
 @RequestMapping("foods")
@@ -19,35 +20,39 @@ public class FoodController {
     private FoodService foodService;
 
     @PostMapping
-    public ResponseEntity<?> addFood(@RequestBody FoodDto foodDto){
+    @ResponseStatus(HttpStatus.CREATED)
+    public Food addFood(@RequestBody FoodDto foodDto){
         log.info("added food={} to database ", foodDto);
         Food food = FoodMapper.INSTANCE.mapToFood(foodDto);
-        return ResponseEntity.ok().body(foodService.addFood(food));
+        return foodService.addFood(food);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll(){
+    @ResponseStatus(HttpStatus.OK)
+    public List<Food> getAll(){
         log.info("get all foods from database");
-    return ResponseEntity.ok().body(foodService.getAll());
+        return foodService.getAll();
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<?> getById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
+    @ResponseStatus(HttpStatus.OK)
+    public Food getById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
         log.info("get food by id={} from database :", id);
-        return ResponseEntity.ok().body(foodService.getFoodById(id));
+        return foodService.getFoodById(id);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateFood(@RequestBody FoodDto foodDto){
+    @ResponseStatus(HttpStatus.OK)
+    public Food updateFood(@RequestBody FoodDto foodDto){
         log.info("update food={} to database ", foodDto);
         Food food = FoodMapper.INSTANCE.mapToFood(foodDto);
-        return ResponseEntity.ok().body(foodService.updateFood(food));
+        return foodService.updateFood(food);
     }
 
     @DeleteMapping(path = "{id}")
-    public ResponseEntity<?> deleteFood(@PathVariable @Min(value = 1, message = "Element Not Found") Long id){
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteFood(@PathVariable @Min(value = 1, message = "Element Not Found") Long id){
         log.info("delete food with id={} from database", id);
         foodService.deleteFood(id);
-        return ResponseEntity.noContent().build();
     }
 }

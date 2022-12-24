@@ -1,4 +1,4 @@
-package com.fawry.foodorderingapi.service.serviceImlementation;
+package com.fawry.foodorderingapi.service.impl;
 
 import com.fawry.foodorderingapi.entity.Food;
 import com.fawry.foodorderingapi.exception.ItemNotAvailableException;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -27,7 +26,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Optional<Food> getFoodById(Long id) {
+    public Food getFoodById(Long id) {
         return foodRepo.findById(id);
     }
 

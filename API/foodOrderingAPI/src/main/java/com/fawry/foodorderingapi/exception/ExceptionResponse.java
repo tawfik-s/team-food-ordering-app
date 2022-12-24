@@ -1,7 +1,6 @@
 package com.fawry.foodorderingapi.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;

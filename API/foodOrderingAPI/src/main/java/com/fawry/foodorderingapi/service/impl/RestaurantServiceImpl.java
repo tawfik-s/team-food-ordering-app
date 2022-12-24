@@ -1,4 +1,4 @@
-package com.fawry.foodorderingapi.service.serviceImlementation;
+package com.fawry.foodorderingapi.service.impl;
 
 import com.fawry.foodorderingapi.entity.Restaurant;
 import com.fawry.foodorderingapi.repository.RestaurantRepo;
@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -24,7 +23,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Optional<Restaurant> getRestaurantById(Long id) {
+    public Restaurant getRestaurantById(Long id) {
         return restaurantRepo.findById(id);
     }
 

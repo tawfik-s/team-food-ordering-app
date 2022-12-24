@@ -6,11 +6,13 @@ import com.fawry.foodorderingapi.model.RestaurantDto;
 import com.fawry.foodorderingapi.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @RestController
 @RequestMapping("restaurants")
@@ -22,34 +24,38 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping
-    public ResponseEntity<?> addRestaurant(@RequestBody RestaurantDto restaurantDto){
+    @ResponseStatus(HttpStatus.CREATED)
+    public Restaurant addRestaurant(@RequestBody RestaurantDto restaurantDto){
         log.info("add restaurant={} to database", restaurantDto);
         Restaurant restaurant = RestaurantMapper.INSTANCE.mapToRestaurant(restaurantDto);
-        return ResponseEntity.ok().body(restaurantService.addRestaurant(restaurant));
+        return restaurantService.addRestaurant(restaurant);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll(){
+    @ResponseStatus(HttpStatus.OK)
+    public List<Restaurant> getAll(){
         log.info("get all restaurants from database");
-        return ResponseEntity.ok().body(restaurantService.getAll());
+        return restaurantService.getAll();
     }
 
     @GetMapping("byId/{id}")
-    public ResponseEntity<?> getRestaurantById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
+    @ResponseStatus(HttpStatus.OK)
+    public Restaurant getRestaurantById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
         log.info("get restaurant with id={} from database", id);
-        return ResponseEntity.ok().body(restaurantService.getRestaurantById(id));
+        return restaurantService.getRestaurantById(id);
     }
 
     @GetMapping("byName/{name}")
-    public ResponseEntity<?> getRestaurantByName(@PathVariable String name){
+    @ResponseStatus(HttpStatus.OK)
+    public Restaurant getRestaurantByName(@PathVariable String name){
         log.info("get restaurant with name={} from database", name);
-        return ResponseEntity.ok().body(restaurantService.getRestaurantByName(name));
+        return restaurantService.getRestaurantByName(name);
     }
 
     @DeleteMapping(path = "{id}")
-    public ResponseEntity<?> deleteRestaurant(@PathVariable @Min(value = 1, message = "Element Not Found") Long id){
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteRestaurant(@PathVariable @Min(value = 1, message = "Element Not Found") Long id){
         log.info("delete restaurant with id={} from database", id);
         restaurantService.deleteRestaurant(id);
-        return ResponseEntity.noContent().build();
     }
 }
