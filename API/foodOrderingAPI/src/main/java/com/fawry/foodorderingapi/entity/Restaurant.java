@@ -2,18 +2,16 @@ package com.fawry.foodorderingapi.entity;
 
 
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class Restaurant {
 
     @Id
@@ -26,4 +24,13 @@ public class Restaurant {
 
     @OneToMany
     private List<Food> foods;
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", Phone='" + Phone + '\'' +
+                '}';
+    }
 }
