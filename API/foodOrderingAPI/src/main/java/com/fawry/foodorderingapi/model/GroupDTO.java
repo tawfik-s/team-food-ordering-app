@@ -1,6 +1,7 @@
 package com.fawry.foodorderingapi.model;
 
 import com.fawry.foodorderingapi.entity.AppUser;
+import com.fawry.foodorderingapi.entity.Order;
 import com.fawry.foodorderingapi.entity.Restaurant;
 import com.fawry.foodorderingapi.entity.SubOrder;
 import lombok.*;
@@ -32,10 +33,10 @@ public class GroupDTO {
 
     private List<UsersDto> UsersRequestToJoin;
 
-    private List<SubOrder> order;
+    private List<Order> order;
 
 
-    public GroupDTO(Long id, String title, String anyOneCanJoinWithoutRequest, String groupIsFinished, Restaurant restaurant, List<AppUser> users, List<AppUser> usersRequestToJoin, List<SubOrder> order) {
+    public GroupDTO(Long id, String title, String anyOneCanJoinWithoutRequest, String groupIsFinished, Restaurant restaurant, List<AppUser> users, List<AppUser> usersRequestToJoin, List<Order> order) {
         this.id = id;
         this.title = title;
         this.anyOneCanJoinWithoutRequest = anyOneCanJoinWithoutRequest;

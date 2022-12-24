@@ -1,6 +1,7 @@
 package com.fawry.foodorderingapi.service.impl;
 
 import com.fawry.foodorderingapi.entity.Restaurant;
+import com.fawry.foodorderingapi.exception.RestaurantNotFoundException;
 import com.fawry.foodorderingapi.repository.RestaurantRepo;
 import com.fawry.foodorderingapi.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant getRestaurantById(Long id) {
-        return restaurantRepo.findById(id);
+        return restaurantRepo.findById(id).orElseThrow(RestaurantNotFoundException::new);
     }
 
     @Override

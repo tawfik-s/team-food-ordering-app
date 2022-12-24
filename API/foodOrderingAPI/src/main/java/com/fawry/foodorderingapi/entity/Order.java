@@ -6,22 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(name = "orders")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Order implements Serializable {
-    private static final long serialVersionUID = -8326631444694108L;
+public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String comment;
-    private double totalPrice;
-    @OneToMany
-    private List<SubOrder> orders;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<SubOrder> items;
 
 }

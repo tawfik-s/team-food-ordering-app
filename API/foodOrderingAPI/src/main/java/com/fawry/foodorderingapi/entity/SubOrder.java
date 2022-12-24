@@ -6,21 +6,33 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class SubOrder implements Serializable {
-
-    private static final long serialVersionUID = -8476250229565837436L;
+public class SubOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private int quantity;
 
-    @OneToOne
+    private String comment;
+
+    @ManyToOne
+    @JoinColumn(name = "food_id")
     private Food food;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    public SubOrder(int quantity, Food fooditem, Order order, String comment) {
+        this.quantity = quantity;
+        this.food = fooditem;
+        this.order = order;
+        this.comment = comment;
+
+    }
 }

@@ -11,5 +11,6 @@ public interface FoodMapper {
     FoodMapper INSTANCE = Mappers.getMapper(FoodMapper.class);
 
     FoodDto mapToFoodDto(Food food);
+
     Food mapToFood(FoodDto foodDto);
 }

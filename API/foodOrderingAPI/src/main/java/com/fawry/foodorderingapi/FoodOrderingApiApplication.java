@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class FoodOrderingApiApplication {
 
-    @Autowired
-    private AppUserRepo appUserRepo;
-    @Autowired
-    private RestaurantRepo restaurantRepo;
+//    @Autowired
+//    private AppUserRepo appUserRepo;
+//    @Autowired
+//    private RestaurantRepo restaurantRepo;
 
     public static void main(String[] args) {
         SpringApplication.run(FoodOrderingApiApplication.class, args);

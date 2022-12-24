@@ -15,16 +15,15 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class AppGroup implements Serializable {
+public class AppGroup {
 
-    private static final long serialVersionUID = -2034928754517110842L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String title;
 
-    private String anyOneCanJoinWithoutRequest;  //flag to make group public
+    private String anyOneCanJoinWithoutRequest;  
 
     private String groupIsFinished;
 
