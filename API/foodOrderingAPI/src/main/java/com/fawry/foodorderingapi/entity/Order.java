@@ -14,12 +14,12 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
- //   private String subOrderNotes;
-
-    @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<SubOrder> items;
+
 }

@@ -1,6 +1,6 @@
 package com.fawry.foodorderingapi.resources;
 
-import com.fawry.foodorderingapi.models.OrderDto;
+import com.fawry.foodorderingapi.model.OrderDto;
 import com.fawry.foodorderingapi.service.impl.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

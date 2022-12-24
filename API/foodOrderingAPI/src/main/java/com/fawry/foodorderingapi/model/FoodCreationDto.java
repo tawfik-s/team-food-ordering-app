@@ -1,4 +1,4 @@
-package com.fawry.foodorderingapi.models;
+package com.fawry.foodorderingapi.model;
 
 import lombok.Getter;
 import lombok.Setter;

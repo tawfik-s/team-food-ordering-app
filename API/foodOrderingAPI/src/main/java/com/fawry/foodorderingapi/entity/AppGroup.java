@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,10 @@ public class AppGroup {
 
     private String title;
 
+    private String anyOneCanJoinWithoutRequest;  
+
+    private String groupIsFinished;
+
     @ManyToOne
     private Restaurant restaurant;
 
@@ -32,6 +37,6 @@ public class AppGroup {
     private List<AppUser> UsersRequestToJoin;
 
     @OneToMany
-    private List<SubOrder> order;
+    private List<Order> order;
 
 }

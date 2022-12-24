@@ -1,8 +1,7 @@
 package com.fawry.foodorderingapi.mapper;
 
-
 import com.fawry.foodorderingapi.entity.Food;
-import com.fawry.foodorderingapi.models.FoodCreationDto;
+import com.fawry.foodorderingapi.model.FoodDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,7 +9,8 @@ import org.mapstruct.factory.Mappers;
 public interface FoodMapper {
 
     FoodMapper INSTANCE = Mappers.getMapper(FoodMapper.class);
-    FoodCreationDto mapToDto (Food t);
 
-    Food mapToEntity(FoodCreationDto dto);
+    FoodDto mapToFoodDto(Food food);
+
+    Food mapToFood(FoodDto foodDto);
 }

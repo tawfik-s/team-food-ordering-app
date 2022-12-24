@@ -1,6 +1,6 @@
 package com.fawry.foodorderingapi.service;
 
-import com.fawry.foodorderingapi.models.OrderDto;
+import com.fawry.foodorderingapi.model.OrderDto;
 
 public interface OrderService {
 

@@ -5,9 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
 @Getter
@@ -15,16 +14,12 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 public class Food {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
 
     private float price;
 
     private String image;
-
-
 }
