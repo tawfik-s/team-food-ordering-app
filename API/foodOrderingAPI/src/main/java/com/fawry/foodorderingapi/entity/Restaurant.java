@@ -5,21 +5,18 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Restaurant {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
-
     private String Phone;
 
     @OneToMany
