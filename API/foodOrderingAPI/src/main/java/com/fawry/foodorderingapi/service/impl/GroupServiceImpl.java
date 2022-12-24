@@ -87,7 +87,6 @@ public class GroupServiceImpl implements GroupService {
                 .stream()
                 .filter(appUser1 -> appUser1.getId() == newUserId)
                 .collect(Collectors.toList());
-        //TODO Chick user in Users Request To Join
         if (!list.isEmpty()) {
             appGroup.getUsersRequestToJoin().removeIf((user) -> user.getId() == appUser.getId());
             appGroup.getUsers().add(appUser);
