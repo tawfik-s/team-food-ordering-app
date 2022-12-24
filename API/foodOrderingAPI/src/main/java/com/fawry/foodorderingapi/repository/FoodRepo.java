@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FoodRepo extends JpaRepository<Food,Long> {
-<<<<<<< HEAD
-=======
+
     Food findFoodById(Long id);
->>>>>>> origin/tawfeek1
 }
