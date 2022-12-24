@@ -6,19 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
+import java.util.List;
+
+@Entity(name = "orders")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class SubOrderItem {
-
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int quantity;
+ //   private String subOrderNotes;
 
-    @OneToOne
-    private Food food;
+    @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL)
+    private List<SubOrder> items;
 }
