@@ -14,7 +14,6 @@ public class FoodServiceImpl implements FoodService {
     @Autowired
     private FoodRepo foodRepo;
 
-
     @Override
     public Food addFood(Food food) {
         return foodRepo.save(food);

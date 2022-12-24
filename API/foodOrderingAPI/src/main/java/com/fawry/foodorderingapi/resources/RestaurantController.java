@@ -1,4 +1,4 @@
-package com.fawry.foodorderingapi.resource;
+package com.fawry.foodorderingapi.resources;
 
 import com.fawry.foodorderingapi.entity.Restaurant;
 import com.fawry.foodorderingapi.mapper.RestaurantMapper;

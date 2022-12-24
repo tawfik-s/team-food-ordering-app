@@ -1,8 +1,5 @@
-package com.example.product_catalog_api.Exceptions;
+package com.fawry.foodorderingapi.exception;
 
-import com.fawry.foodorderingapi.exception.GroupNotFoundException;
-import com.fawry.foodorderingapi.exception.RestaurantNotFoundException;
-import com.fawry.foodorderingapi.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,11 +15,6 @@ import java.util.Map;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = GroupNotFoundException.class)
-    public ResponseEntity<Object> exception(GroupNotFoundException exception) {
-        return new ResponseEntity<>("Group not found", HttpStatus.NOT_FOUND);
-    }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = UserNotFoundException.class)
