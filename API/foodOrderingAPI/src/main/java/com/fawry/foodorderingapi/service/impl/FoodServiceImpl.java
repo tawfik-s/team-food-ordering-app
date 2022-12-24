@@ -27,7 +27,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food getFoodById(Long id) {
-        return foodRepo.findById(id);
+        return foodRepo.findFoodById(id);
     }
 
     @Override
