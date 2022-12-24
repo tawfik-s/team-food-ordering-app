@@ -1,10 +1,8 @@
 package com.fawry.foodorderingapi.entity;
 
-import lombok.Getter;
+import lombok.*;
+
 import javax.persistence.*;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -13,6 +11,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class AppUser {
 
     @Id
@@ -25,7 +24,9 @@ public class AppUser {
 
     private String password;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<AppGroup> OwnedGroups;
 
+    @OneToMany
+    private List<SubOrder> subOrders;
 }

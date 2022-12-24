@@ -2,10 +2,8 @@ package com.fawry.foodorderingapi.entity;
 
 
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,11 +11,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-public class Restaurant implements Serializable {
-
-    private static final long serialVersionUID = -6470166940553717471L;
+public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,4 +21,13 @@ public class Restaurant implements Serializable {
 
     @OneToMany
     private List<Food> foods;
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", Phone='" + Phone + '\'' +
+                '}';
+    }
 }
