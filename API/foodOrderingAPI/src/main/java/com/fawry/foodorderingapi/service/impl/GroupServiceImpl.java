@@ -7,6 +7,7 @@ import com.fawry.foodorderingapi.exception.GroupNotFoundException;
 import com.fawry.foodorderingapi.exception.RestaurantNotFoundException;
 import com.fawry.foodorderingapi.exception.UserNotFoundException;
 import com.fawry.foodorderingapi.mapper.NewGroupDTOAndGroupEntityMapper;
+import com.fawry.foodorderingapi.model.GroupDTO;
 import com.fawry.foodorderingapi.model.NewGroupDTO;
 import com.fawry.foodorderingapi.repository.AppGroupRepo;
 import com.fawry.foodorderingapi.repository.AppUserRepo;
@@ -61,12 +62,13 @@ public class GroupServiceImpl implements GroupService {
     public void userJoinGroup(Long groupId, Long userId) {
         AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(GroupNotFoundException::new);
         AppUser appUser = userRepo.findById(userId).orElseThrow(UserNotFoundException::new);
-        appUser.getOwnedGroups()
+        List<AppGroup> appGroups = appUser.getOwnedGroups()
                 .stream()
-                .filter(appGroup1 -> appGroup1.getId() == groupId);
-//         System.out.println(appUser.getOwnedGroups().isEmpty());
+                .filter(appGroup1 -> appGroup1.getId() == groupId)
+                .collect(Collectors.toList());
+        System.out.println(appGroups.isEmpty());
         //TODO chick is admin group
-        if (appUser.getOwnedGroups().isEmpty()) {
+        if (appGroups.isEmpty()) {
             if (appGroup.getAnyOneCanJoinWithoutRequest().equals("true")) {
                 appGroup.getUsers().add(appUser);
             } else {
@@ -95,9 +97,15 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public List<AppGroup> getAvailableGroups() {
-        return groupRepo.findAll().stream()
+    public List<GroupDTO> getAvailableGroups() {
+        List<AppGroup> appGroup1 = groupRepo.findAll().stream()
                 .filter((appGroup) -> appGroup.getGroupIsFinished().equals("false"))
                 .collect(Collectors.toList());
+        List<GroupDTO> groupDTO = new ArrayList<>();
+        for (AppGroup group : appGroup1) {
+            GroupDTO groupDTO1 = new GroupDTO(group.getId(),group.getTitle(), group.getAnyOneCanJoinWithoutRequest(), group.getGroupIsFinished(), group.getRestaurant(), group.getUsers(),group.getUsersRequestToJoin(), group.getOrder());
+            groupDTO.add(groupDTO1);
+        }
+        return groupDTO;
     }
 }
