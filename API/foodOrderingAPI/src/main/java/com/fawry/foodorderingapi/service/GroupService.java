@@ -1,6 +1,7 @@
 package com.fawry.foodorderingapi.service;
 
 import com.fawry.foodorderingapi.entity.AppGroup;
+import com.fawry.foodorderingapi.model.GroupDTO;
 import com.fawry.foodorderingapi.model.NewGroupDTO;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public interface GroupService {
 
     public void adminAcceptUserAtGroup(Long groupId,Long newUserId);
 
-    public List<AppGroup> getAvailableGroups();
+    public List<GroupDTO> getAvailableGroups();
 
 }

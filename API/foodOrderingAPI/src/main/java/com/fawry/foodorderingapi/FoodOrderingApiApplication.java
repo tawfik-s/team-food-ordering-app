@@ -31,6 +31,7 @@ public class FoodOrderingApiApplication {
         return args -> {
             AppUser appUser1 = appUserRepo.save(new AppUser(null, "usef", "0100232342", "1234", null, null));
             AppUser appUser2 = appUserRepo.save(new AppUser(null, "tawfeek", "0100232342", "1234", null, null));
+            AppUser appUser3 = appUserRepo.save(new AppUser(null, "tawfeek123", "0100232342", "1234", null, null));
             System.out.println(appUser1);
             System.out.println(appUser2);
             Restaurant restaurant = restaurantRepo.save(new Restaurant(null, "tarek", "110077", null));
@@ -38,8 +39,12 @@ public class FoodOrderingApiApplication {
             AppGroup appGroup1 = groupService.addGroup(appUser1.getId(), new NewGroupDTO("group1", "false", restaurant.getId()));
             System.out.println(appGroup1);
             groupService.userJoinGroup(appGroup1.getId(), appUser2.getId());
+            groupService.userJoinGroup(appGroup1.getId(), appUser3.getId());
             groupService.adminAcceptUserAtGroup(appGroup1.getId(),appUser2.getId());
-//            groupService.userJoinGroup(appGroup1.getId(), appUser1.getId());
+            AppGroup appGroup2 = groupService.addGroup(appUser2.getId(), new NewGroupDTO("group1", "false", restaurant.getId()));
+
+            groupService.userJoinGroup(appGroup2.getId(), appUser1.getId());
+            groupService.adminAcceptUserAtGroup(appGroup2.getId(),appUser1.getId());
 //            groupService.getAvailableGroups().stream().forEach(System.out::println);
 
         };
