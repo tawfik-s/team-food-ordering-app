@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,9 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class AppGroup {
+public class AppGroup implements Serializable {
 
+    private static final long serialVersionUID = -2034928754517110842L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -36,6 +38,6 @@ public class AppGroup {
     private List<AppUser> UsersRequestToJoin;
 
     @OneToMany
-    private List<SubOrder> order;
+    private List<Order> order;
 
 }
