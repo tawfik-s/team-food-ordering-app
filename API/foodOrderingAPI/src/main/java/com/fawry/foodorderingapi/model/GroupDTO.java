@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Data
 
 public class GroupDTO {
@@ -35,8 +34,8 @@ public class GroupDTO {
 
     private List<Order> order;
 
-
-    public GroupDTO(Long id, String title, String anyOneCanJoinWithoutRequest, String groupIsFinished, Restaurant restaurant, List<AppUser> users, List<AppUser> usersRequestToJoin, List<Order> order) {
+    public GroupDTO(Long id, String title, String anyOneCanJoinWithoutRequest, String groupIsFinished,
+            Restaurant restaurant, List<AppUser> users, List<AppUser> usersRequestToJoin, List<Order> order) {
         this.id = id;
         this.title = title;
         this.anyOneCanJoinWithoutRequest = anyOneCanJoinWithoutRequest;
@@ -44,12 +43,12 @@ public class GroupDTO {
         this.restaurant = restaurant;
         Users = new ArrayList<>();
         for (AppUser user : users) {
-            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword());
+            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
             this.Users.add(usersDto);
         }
         this.UsersRequestToJoin = new ArrayList<>();
         for (AppUser user : usersRequestToJoin) {
-            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword());
+            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
             this.UsersRequestToJoin.add(usersDto);
         }
         this.order = order;

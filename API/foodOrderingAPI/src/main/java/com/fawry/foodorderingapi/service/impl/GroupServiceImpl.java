@@ -3,9 +3,7 @@ package com.fawry.foodorderingapi.service.impl;
 import com.fawry.foodorderingapi.entity.AppGroup;
 import com.fawry.foodorderingapi.entity.AppUser;
 import com.fawry.foodorderingapi.entity.Restaurant;
-import com.fawry.foodorderingapi.exception.GroupNotFoundException;
-import com.fawry.foodorderingapi.exception.RestaurantNotFoundException;
-import com.fawry.foodorderingapi.exception.UserNotFoundException;
+import com.fawry.foodorderingapi.exception.RecordNotFoundException;
 import com.fawry.foodorderingapi.mapper.NewGroupDTOAndGroupEntityMapper;
 import com.fawry.foodorderingapi.model.GroupDTO;
 import com.fawry.foodorderingapi.model.NewGroupDTO;
@@ -23,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GroupServiceImpl implements GroupService {
+public class  GroupServiceImpl implements GroupService {
 
     @Autowired
     private AppUserRepo userRepo;
@@ -38,9 +36,9 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public AppGroup addGroup(Long userId, NewGroupDTO newGroup) {
-        AppUser appUser = userRepo.findById(userId).orElseThrow(UserNotFoundException::new);
+        AppUser appUser = userRepo.findById(userId).orElseThrow(()->new RecordNotFoundException("record user not found"));
         AppGroup appGroup = newGroupDTOAndGroupEntityMapper.NewGroupDTOToAppGroup(newGroup);
-        Restaurant restaurant = restaurantRepo.findById(newGroup.getRestaurantId()).orElseThrow(RestaurantNotFoundException::new);
+        Restaurant restaurant = restaurantRepo.findById(newGroup.getRestaurantId()).orElseThrow(()->new RecordNotFoundException("can't find user in group"));
         appGroup.setGroupIsFinished("false");
         appGroup.setRestaurant(restaurant);
         appGroup = groupRepo.save(appGroup);
@@ -52,16 +50,16 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public void finishGroup(Long groupId) {
-        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(GroupNotFoundException::new);
+        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(()->new RecordNotFoundException("can't find group"));
         appGroup.setGroupIsFinished("true");
         groupRepo.save(appGroup);
     }
 
     @Override
     @Transactional
-    public void userJoinGroup(Long groupId, Long userId) {
-        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(GroupNotFoundException::new);
-        AppUser appUser = userRepo.findById(userId).orElseThrow(UserNotFoundException::new);
+    public void userJoinGroup(Long groupId, Long newUserId) {
+        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(()->new RecordNotFoundException("app group not found"));
+        AppUser appUser = userRepo.findById(newUserId).orElseThrow(()->new RecordNotFoundException("user not found"));
         List<AppGroup> appGroups = appUser.getOwnedGroups()
                 .stream()
                 .filter(appGroup1 -> appGroup1.getId() == groupId)
@@ -81,8 +79,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public void adminAcceptUserAtGroup(Long groupId, Long newUserId) {
-        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(GroupNotFoundException::new);
-        AppUser appUser = userRepo.findById(newUserId).orElseThrow(UserNotFoundException::new);
+        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(()->new RecordNotFoundException("app group not found"));
+        AppUser appUser = userRepo.findById(newUserId).orElseThrow(()->new RecordNotFoundException("user not found"));
         List<AppUser> list = appGroup.getUsersRequestToJoin()
                 .stream()
                 .filter(appUser1 -> appUser1.getId() == newUserId)
