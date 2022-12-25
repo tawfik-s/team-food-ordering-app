@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/order")
 public class OrderController {
     @Autowired
     OrderService orderService;

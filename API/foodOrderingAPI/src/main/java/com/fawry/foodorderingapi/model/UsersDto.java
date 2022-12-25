@@ -18,6 +18,9 @@ public class UsersDto {
     @NotNull(message = "Phone is not null")
     private String phone;
 
+    @Size(min = 2, max = 400, message = "The User email is not valid")
+    private String email;
+
     //TODO ignore in json
     @Size(min = 6, max = 4000, message = "The Password is not valid")
     private String password;

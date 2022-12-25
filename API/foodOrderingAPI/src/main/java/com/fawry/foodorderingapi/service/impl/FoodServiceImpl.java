@@ -1,7 +1,7 @@
 package com.fawry.foodorderingapi.service.impl;
 
 import com.fawry.foodorderingapi.entity.Food;
-import com.fawry.foodorderingapi.exception.ItemNotAvailableException;
+import com.fawry.foodorderingapi.exception.RecordNotFoundException;
 import com.fawry.foodorderingapi.repository.FoodRepo;
 import com.fawry.foodorderingapi.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public Food updateFood(Food food) {
         Food food1 = foodRepo.findById(food.getId()).orElseThrow(() -> {
-            return new ItemNotAvailableException("");
+            return new RecordNotFoundException("food not found exception");
         });
         food1.setId(food.getId());
         food1.setName(food.getName());

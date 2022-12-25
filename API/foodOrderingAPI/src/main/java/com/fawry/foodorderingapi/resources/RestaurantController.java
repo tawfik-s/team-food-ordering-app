@@ -14,7 +14,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
-@RequestMapping("restaurants")
+@RequestMapping("/api/restaurant")
 @Slf4j
 @Validated
 public class RestaurantController {

@@ -24,6 +24,8 @@ public class AppUser {
 
     private String password;
 
+    private String email;
+
     @OneToMany(fetch = FetchType.LAZY)
     private List<AppGroup> OwnedGroups;
 

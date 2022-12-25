@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
-@RequestMapping("foods")
+@RequestMapping("/api/food")
 @Slf4j
 public class FoodController {
     @Autowired

@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private NewUserDTOAndAppUserEntityMapper mapper = Mappers.getMapper(NewUserDTOAndAppUserEntityMapper.class);
     @Override
     public UsersDto createUser(UsersDto usersDto) {
-        AppUser user = mapper.NewGroupDTOToAppGroup(usersDto);
+        AppUser user = mapper.userDtoModelToAppUserEntity(usersDto);
         userRepo.save(user);
         return usersDto;
     }
