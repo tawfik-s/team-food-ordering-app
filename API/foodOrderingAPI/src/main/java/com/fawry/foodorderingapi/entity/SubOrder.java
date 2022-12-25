@@ -28,9 +28,9 @@ public class SubOrder {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public SubOrder(int quantity, Food fooditem, Order order, String comment) {
+    public SubOrder(int quantity, Food food, Order order, String comment) {
         this.quantity = quantity;
-        this.food = fooditem;
+        this.food = food;
         this.order = order;
         this.comment = comment;
 
