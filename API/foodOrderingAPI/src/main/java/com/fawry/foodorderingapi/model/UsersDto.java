@@ -1,5 +1,6 @@
 package com.fawry.foodorderingapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -21,7 +22,7 @@ public class UsersDto {
     @Size(min = 2, max = 400, message = "The User email is not valid")
     private String email;
 
-    //TODO ignore in json
     @Size(min = 6, max = 4000, message = "The Password is not valid")
+    @JsonIgnore
     private String password;
 }
