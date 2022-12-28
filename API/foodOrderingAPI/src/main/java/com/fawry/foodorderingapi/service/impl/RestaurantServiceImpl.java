@@ -2,6 +2,8 @@ package com.fawry.foodorderingapi.service.impl;
 
 import com.fawry.foodorderingapi.entity.Restaurant;
 import com.fawry.foodorderingapi.exception.RecordNotFoundException;
+import com.fawry.foodorderingapi.mapper.RestaurantMapper;
+import com.fawry.foodorderingapi.model.RestaurantDto;
 import com.fawry.foodorderingapi.repository.RestaurantRepo;
 import com.fawry.foodorderingapi.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,11 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private RestaurantRepo restaurantRepo;
+
     @Override
-    public Restaurant addRestaurant(Restaurant restaurant) {
-      return  restaurantRepo.save(restaurant);
+    public Restaurant addRestaurant(RestaurantDto restaurantDto) {
+      Restaurant restaurant = RestaurantMapper.INSTANCE.toEntity(restaurantDto);
+      return restaurantRepo.save(restaurant);
     }
 
     @Override
@@ -25,7 +29,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant getRestaurantById(Long id) {
-        return restaurantRepo.findById(id).orElseThrow(()->new RecordNotFoundException("can't find restaurant record"));
+        return restaurantRepo.findById(id).orElseThrow(RecordNotFoundException::new);
     }
 
     @Override

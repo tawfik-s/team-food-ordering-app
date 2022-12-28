@@ -9,9 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,12 +20,4 @@ public class Restaurant {
     @OneToMany
     private List<Food> foods;
 
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", Phone='" + Phone + '\'' +
-                '}';
-    }
 }

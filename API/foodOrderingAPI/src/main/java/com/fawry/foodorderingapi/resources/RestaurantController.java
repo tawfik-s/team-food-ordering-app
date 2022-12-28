@@ -14,7 +14,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/restaurant")
+@RequestMapping("restaurants")
 @Slf4j
 @Validated
 public class RestaurantController {
@@ -26,8 +26,7 @@ public class RestaurantController {
     @ResponseStatus(HttpStatus.CREATED)
     public Restaurant addRestaurant(@RequestBody RestaurantDto restaurantDto){
         log.info("add restaurant={} to database", restaurantDto);
-        Restaurant restaurant = RestaurantMapper.INSTANCE.mapToRestaurant(restaurantDto);
-        return restaurantService.addRestaurant(restaurant);
+        return restaurantService.addRestaurant(restaurantDto);
     }
 
     @GetMapping
@@ -37,16 +36,16 @@ public class RestaurantController {
         return restaurantService.getAll();
     }
 
-    @GetMapping("byId/{id}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Restaurant getRestaurantById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
+    public Restaurant getRestaurantById(@RequestParam @Min(value = 1, message = "enter valid number") Long id){
         log.info("get restaurant with id={} from database", id);
         return restaurantService.getRestaurantById(id);
     }
 
-    @GetMapping("byName/{name}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Restaurant getRestaurantByName(@PathVariable String name){
+    public Restaurant getRestaurantByName(@RequestParam  String name){
         log.info("get restaurant with name={} from database", name);
         return restaurantService.getRestaurantByName(name);
     }

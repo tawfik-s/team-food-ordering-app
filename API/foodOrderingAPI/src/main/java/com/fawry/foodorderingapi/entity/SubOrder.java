@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Optional;
+
 @Entity
 @Getter
 @Setter
@@ -21,16 +23,14 @@ public class SubOrder {
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "food_id")
     private Food food;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
     private Order order;
 
-    public SubOrder(int quantity, Food food, Order order, String comment) {
+    public SubOrder(int quantity, Food foodItem, Order order, String comment) {
         this.quantity = quantity;
-        this.food = food;
+        this.food = foodItem;
         this.order = order;
         this.comment = comment;
 
