@@ -2,11 +2,13 @@ package com.fawry.foodorderingapi.resources;
 
 import com.fawry.foodorderingapi.entity.AppGroup;
 import com.fawry.foodorderingapi.entity.AppUser;
+import com.fawry.foodorderingapi.entity.Order;
 import com.fawry.foodorderingapi.exception.RecordNotFoundException;
 import com.fawry.foodorderingapi.model.*;
 import com.fawry.foodorderingapi.repository.AppUserRepo;
 import com.fawry.foodorderingapi.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,13 +70,13 @@ public class GroupController {
     }
 
     @PostMapping("/join")
+    @ResponseStatus(HttpStatus.OK)
     public void askToJoinGroup(@RequestBody AskToJoinGroupDTO askToJoinGroupDTO){
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser appUser = appUserRepo.findByEmail(email)
                 .orElseThrow(() -> new RecordNotFoundException("you are not authorized to join group"));
         groupService.userJoinGroup(askToJoinGroupDTO.getGroupId(),appUser.getId());
     }
-
 
 
 }
