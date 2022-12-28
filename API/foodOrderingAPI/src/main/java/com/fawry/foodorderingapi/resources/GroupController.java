@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/group")
+@RequestMapping("/groups")
 public class GroupController {
     @Autowired
     private GroupService groupService;

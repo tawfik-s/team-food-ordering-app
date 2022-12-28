@@ -5,7 +5,7 @@ import com.fawry.foodorderingapi.mapper.OrderMapper;
 import com.fawry.foodorderingapi.model.OrderDto;
 import com.fawry.foodorderingapi.model.ItemOrderSummaryDto;
 import com.fawry.foodorderingapi.model.UserOrderSummaryDto;
-import com.fawry.foodorderingapi.service.impl.OrderService;
+import com.fawry.foodorderingapi.service.impl.OrderServiceImpl;
 import com.fawry.foodorderingapi.service.impl.UserServiceImpl;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/groups/{groupId}/orders")
 public class OrderController {
     @Autowired
-   private OrderService orderService;
+   private OrderServiceImpl orderService;
 
     @Autowired
    private UserServiceImpl userService;
