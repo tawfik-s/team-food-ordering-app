@@ -33,10 +33,10 @@ public class AppGroup {
     @ManyToMany
     private List<AppUser> Users;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<AppUser> UsersRequestToJoin;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Order> order;
 
 }

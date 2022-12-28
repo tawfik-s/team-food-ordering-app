@@ -7,16 +7,14 @@ import com.fawry.foodorderingapi.model.LoginCredentials;
 import com.fawry.foodorderingapi.model.UsersDto;
 import com.fawry.foodorderingapi.repository.AppUserRepo;
 import com.fawry.foodorderingapi.security.JWTUtil;
+import com.fawry.foodorderingapi.service.impl.UserServiceImpl;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
@@ -34,6 +32,9 @@ public class AuthController {
     private AuthenticationManager authManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     private NewUserDTOAndAppUserEntityMapper userMapper = Mappers.getMapper(NewUserDTOAndAppUserEntityMapper.class);
 
@@ -74,5 +75,6 @@ public class AuthController {
             throw new RuntimeException("Invalid Login Credentials");
         }
     }
+
 
 }

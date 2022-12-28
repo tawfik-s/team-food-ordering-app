@@ -1,11 +1,9 @@
 package com.fawry.foodorderingapi.entity;
 
-
 import javax.persistence.*;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
