@@ -1,5 +1,6 @@
 package com.fawry.foodorderingapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import javax.persistence.*;
 import lombok.NoArgsConstructor;
@@ -20,19 +21,21 @@ public class SubOrder {
 
     private String comment;
 
+    private float subOrderPrice;
+
     @ManyToOne
-    @JoinColumn(name = "food_id")
     private Food food;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "order_id")
     private Order order;
 
-    public SubOrder(int quantity, Food fooditem, Order order, String comment) {
+    public SubOrder(int quantity, Food foodItem, Order order, String comment, float subOrderPrice) {
         this.quantity = quantity;
-        this.food = fooditem;
+        this.food = foodItem;
         this.order = order;
         this.comment = comment;
+        this.subOrderPrice = subOrderPrice;
 
     }
 }

@@ -10,6 +10,7 @@ import com.fawry.foodorderingapi.model.NewGroupDTO;
 import com.fawry.foodorderingapi.repository.AppGroupRepo;
 import com.fawry.foodorderingapi.repository.AppUserRepo;
 import com.fawry.foodorderingapi.repository.RestaurantRepo;
+import com.fawry.foodorderingapi.repository.OrderRepo;
 import com.fawry.foodorderingapi.service.GroupService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class  GroupServiceImpl implements GroupService {
 
     @Autowired
     private RestaurantRepo restaurantRepo;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private OrderRepo orderRepo;
     private NewGroupDTOAndGroupEntityMapper newGroupDTOAndGroupEntityMapper = Mappers.getMapper(NewGroupDTOAndGroupEntityMapper.class);
 
     @Override
@@ -105,4 +112,6 @@ public class  GroupServiceImpl implements GroupService {
         }
         return groupDTO;
     }
+
+
 }

@@ -7,9 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface RestaurantMapper {
-
     RestaurantMapper INSTANCE = Mappers.getMapper(RestaurantMapper.class);
 
-    RestaurantDto mapToRestaurantDto(Restaurant restaurant);
-    Restaurant mapToRestaurant(RestaurantDto restaurantDto);
+    RestaurantDto toDto(Restaurant restaurant);
+    Restaurant toEntity(RestaurantDto restaurantDto);
 }

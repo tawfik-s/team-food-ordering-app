@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewGroupDTO {
-    @Size(min = 2, max = 400, message = "The Title of Gruop is not valid")
+    @Size(min = 2, max = 400, message = "The Title of Group is not valid")
     private String title;
     @Size(min = 2, max = 400, message = "Any One Can Join Without Request is not valid")
     private String anyOneCanJoinWithoutRequest;  //flag to make group public

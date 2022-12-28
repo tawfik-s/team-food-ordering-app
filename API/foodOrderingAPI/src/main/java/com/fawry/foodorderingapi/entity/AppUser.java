@@ -29,6 +29,6 @@ public class AppUser {
     @OneToMany(fetch = FetchType.LAZY)
     private List<AppGroup> OwnedGroups;
 
-    @OneToMany
-    private List<SubOrder> subOrders;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Order> Orders;
 }

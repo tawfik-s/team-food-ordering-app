@@ -1,30 +1,31 @@
 package com.fawry.foodorderingapi.resources;
 
 import com.fawry.foodorderingapi.entity.Food;
-import com.fawry.foodorderingapi.mapper.FoodMapper;
 import com.fawry.foodorderingapi.model.FoodDto;
+import com.fawry.foodorderingapi.model.RestaurantDto;
 import com.fawry.foodorderingapi.service.FoodService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/food")
+@RequestMapping("foods")
 @Slf4j
+@Validated
 public class FoodController {
     @Autowired
     private FoodService foodService;
 
-    @PostMapping
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Food addFood(@RequestBody FoodDto foodDto){
-        log.info("added food={} to database ", foodDto);
-        Food food = FoodMapper.INSTANCE.mapToFood(foodDto);
-        return foodService.addFood(food);
+    public Food addFood(@RequestBody FoodDto foodDto , @RequestBody RestaurantDto  restaurantDto){
+        log.info("added food={} to restaurant with id={} ", foodDto, restaurantDto.getId());
+        return foodService.addFood(foodDto , restaurantDto);
     }
 
     @GetMapping
@@ -41,12 +42,11 @@ public class FoodController {
         return foodService.getFoodById(id);
     }
 
-    @PutMapping
+    @PutMapping(path = "{foodId}")
     @ResponseStatus(HttpStatus.OK)
-    public Food updateFood(@RequestBody FoodDto foodDto){
-        log.info("update food={} to database ", foodDto);
-        Food food = FoodMapper.INSTANCE.mapToFood(foodDto);
-        return foodService.updateFood(food);
+    public void updateFood(@PathVariable Long foodId, @RequestBody FoodDto foodDto){
+        log.info("update food={} with id={} ", foodDto, foodId);
+        foodService.updateFood(foodId,foodDto);
     }
 
     @DeleteMapping(path = "{id}")
