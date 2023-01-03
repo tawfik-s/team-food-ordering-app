@@ -34,17 +34,13 @@ public class  GroupServiceImpl implements GroupService {
     private RestaurantRepo restaurantRepo;
 
     @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
-    private OrderRepo orderRepo;
-    private NewGroupDTOAndGroupEntityMapper newGroupDTOAndGroupEntityMapper = Mappers.getMapper(NewGroupDTOAndGroupEntityMapper.class);
+    private NewGroupDTOAndGroupEntityMapper groupMapper;
 
     @Override
     @Transactional
     public AppGroup addGroup(Long userId, NewGroupDTO newGroup) {
         AppUser appUser = userRepo.findById(userId).orElseThrow(()->new RecordNotFoundException("record user not found"));
-        AppGroup appGroup = newGroupDTOAndGroupEntityMapper.NewGroupDTOToAppGroup(newGroup);
+        AppGroup appGroup = groupMapper.toEntity(newGroup);
         Restaurant restaurant = restaurantRepo.findById(newGroup.getRestaurantId()).orElseThrow(()->new RecordNotFoundException("can't find user in group"));
         appGroup.setGroupIsFinished("false");
         appGroup.setRestaurant(restaurant);

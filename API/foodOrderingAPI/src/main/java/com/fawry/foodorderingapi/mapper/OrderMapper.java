@@ -7,12 +7,11 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderMapper {
 
     @Mapping(target = "food",source = "order.items")
     OrderDto mapToOrderDto (Order order);
 
-    List<OrderDto> mapToOrdersDtos(List<Order> orders);
-
+    List<OrderDto> toDTOs(List<Order> orders);
 }

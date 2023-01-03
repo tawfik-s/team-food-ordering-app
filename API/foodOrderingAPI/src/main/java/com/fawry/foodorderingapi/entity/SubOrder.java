@@ -21,7 +21,7 @@ public class SubOrder {
 
     private String comment;
 
-    private float subOrderPrice;
+    private double subOrderPrice;
 
     @ManyToOne
     private Food food;
@@ -30,7 +30,7 @@ public class SubOrder {
     @ManyToOne
     private Order order;
 
-    public SubOrder(int quantity, Food foodItem, Order order, String comment, float subOrderPrice) {
+    public SubOrder(int quantity, Food foodItem, Order order, String comment, double subOrderPrice) {
         this.quantity = quantity;
         this.food = foodItem;
         this.order = order;
@@ -38,4 +38,5 @@ public class SubOrder {
         this.subOrderPrice = subOrderPrice;
 
     }
+
 }

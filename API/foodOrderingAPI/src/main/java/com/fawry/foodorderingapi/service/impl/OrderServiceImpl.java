@@ -75,8 +75,8 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
         AppGroup currentGroup = groupRepo.findById(groupId)
                 .orElseThrow(() -> new RecordNotFoundException("Group Not Found"));
         if (currentUser.getOwnedGroups().contains(currentGroup)) {
-            currentGroup.getUsers().stream()
-                    .forEach(user -> user.getOrders().stream()
+            currentGroup.getUsers()
+                    .forEach(user -> user.getOrders()
                             .forEach(order -> {
                                 if (!order.isStatus())
                                     order.setStatus(true);
@@ -118,7 +118,7 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
         for (AppUser user : currentGroup.getUsers()) {
             userOrderSummary.setUsername(user.getName());
             userOrderSummary.setOrders(user.getOrders().stream()
-                    .filter(order -> order.isStatus())
+                    .filter(Order::isStatus)
                     .collect(Collectors.toList()));
             listOfUserOrderSummary.add(userOrderSummary);
         }

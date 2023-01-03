@@ -34,10 +34,9 @@ public class MyUserDetailsService implements UserDetailsService {
         if (userRes == null)
             throw new UsernameNotFoundException("Could not findUser with email = " + email);
         // Return a User Details object using the fetched User information
-        AppUser user = userRes;
         return new org.springframework.security.core.userdetails.User(
                 email,
-                user.getPassword(),
+                userRes.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))); // Sets the role of the found user
     }
 }

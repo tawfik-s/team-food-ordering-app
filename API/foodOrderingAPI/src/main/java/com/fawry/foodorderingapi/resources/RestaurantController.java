@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class RestaurantController {
 
     @GetMapping(path = "id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Restaurant getRestaurantById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
+    public Restaurant getRestaurantById(@Valid  @PathVariable Long id){
         log.info("get restaurant with id={} from database", id);
         return restaurantService.getRestaurantById(id);
     }
@@ -52,7 +53,7 @@ public class RestaurantController {
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteRestaurant(@PathVariable @Min(value = 1, message = "Element Not Found") Long id){
+    public void deleteRestaurant(@Valid @PathVariable Long id){
         log.info("delete restaurant with id={} from database", id);
         restaurantService.deleteRestaurant(id);
     }

@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,23 +32,24 @@ public class GroupController {
     }
 
     @PostMapping
-    public AppGroup addGroup(@RequestBody NewGroupDTO newGroupDTO) {
+    public AppGroup addGroup(@Valid @RequestBody NewGroupDTO newGroupDTO) {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        AppUser appUser = appUserRepo.findByEmail(email)
-                .orElseThrow(() -> new RecordNotFoundException("you are not authorized to add group"));
+        AppUser appUser = appUserRepo
+                .findByEmail(email)
+                .orElseThrow(RecordNotFoundException::new);
         return groupService.addGroup(appUser.getId(), newGroupDTO);
     }
 
     @PostMapping("/finish")
-    public Long finishGroup(@RequestBody GroupId groupId) {
+    public Long finishGroup(@Valid @RequestBody GroupId groupId) {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        AppUser appUser = appUserRepo.findByEmail(email)
-                .orElseThrow(() -> new RecordNotFoundException("you are not authorized to add group"));
-        int present = appUser.getOwnedGroups()
+        AppUser appUser = appUserRepo
+                .findByEmail(email)
+                .orElseThrow(RecordNotFoundException::new);
+        int present = (int) appUser.getOwnedGroups()
                 .stream()
                 .filter(
-                        (group) -> group.getId() == groupId.getGroupId())
-                .collect(Collectors.toList()).size();
+                        (group) -> Objects.equals(group.getId(), groupId.getGroupId())).count();
         if(present==0){
             throw new RecordNotFoundException("you are not authorized to access this group");
         }
@@ -57,12 +60,13 @@ public class GroupController {
     @PostMapping("/accept")
     public void adminAcceptUserAtGroup(@RequestBody AdminAcceptUserAtGroupDto adminAcceptUserAtGroupDto){
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        AppUser appUser = appUserRepo.findByEmail(email)
-                .orElseThrow(() -> new RecordNotFoundException("you are not authorized to add group"));
+        AppUser appUser = appUserRepo
+                .findByEmail(email)
+                .orElseThrow(RecordNotFoundException::new);
         int present = (int) appUser.getOwnedGroups()
                 .stream()
                 .filter(
-                        (group) -> group.getId() == adminAcceptUserAtGroupDto.getGroupId()).count();
+                        (group) -> Objects.equals(group.getId(), adminAcceptUserAtGroupDto.getGroupId())).count();
         if(present==0){
             throw new RecordNotFoundException("you are not authorized to access this group");
         }
@@ -71,10 +75,11 @@ public class GroupController {
 
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.OK)
-    public void askToJoinGroup(@RequestBody AskToJoinGroupDTO askToJoinGroupDTO){
+    public void askToJoinGroup(@Valid @RequestBody AskToJoinGroupDTO askToJoinGroupDTO){
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        AppUser appUser = appUserRepo.findByEmail(email)
-                .orElseThrow(() -> new RecordNotFoundException("you are not authorized to join group"));
+        AppUser appUser = appUserRepo
+                .findByEmail(email)
+                .orElseThrow(RecordNotFoundException::new);
         groupService.userJoinGroup(askToJoinGroupDTO.getGroupId(),appUser.getId());
     }
 

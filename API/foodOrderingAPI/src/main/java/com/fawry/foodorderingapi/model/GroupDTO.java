@@ -18,14 +18,14 @@ import java.util.List;
 
 public class GroupDTO {
     private Long id;
-    @Size(min = 2, max = 400, message = "The Title of Gruop is not valid")
+    @Size(min = 2, max = 400, message = "The Title of Group is not valid")
     private String title;
 
     private String anyOneCanJoinWithoutRequest;
 
     private String groupIsFinished;
 
-    @NotNull(message = "You Shoude Choose Restaurant")
+    @NotNull(message = "You Should Choose Restaurant")
     private Restaurant restaurant;
 
     private List<UsersDto> Users;
@@ -43,12 +43,12 @@ public class GroupDTO {
         this.restaurant = restaurant;
         Users = new ArrayList<>();
         for (AppUser user : users) {
-            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
+            UsersDto usersDto = new UsersDto(user.getId(), user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
             this.Users.add(usersDto);
         }
         this.UsersRequestToJoin = new ArrayList<>();
         for (AppUser user : usersRequestToJoin) {
-            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
+            UsersDto usersDto = new UsersDto(user.getId(), user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
             this.UsersRequestToJoin.add(usersDto);
         }
         this.order = order;

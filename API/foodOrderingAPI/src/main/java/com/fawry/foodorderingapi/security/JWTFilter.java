@@ -1,6 +1,7 @@
 package com.fawry.foodorderingapi.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+@Slf4j
 @Component // Marks this as a component. Now, Spring Boot will handle the creation and management of the JWTFilter Bean
 // and you will be able to inject it in other places of your code
 public class JWTFilter extends OncePerRequestFilter {
@@ -30,10 +31,10 @@ public class JWTFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         // Checking if the header contains a Bearer token
-        if(authHeader != null && !authHeader.isEmpty() && authHeader.startsWith("Bearer ")){
+        if(authHeader != null && authHeader.startsWith("Bearer ")){
             // Extract JWT
             String jwt = authHeader.substring(7);
-            if(jwt == null || jwt.isEmpty()){
+            if(jwt.isEmpty()){
                 // Invalid JWT
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
             }else {
@@ -60,8 +61,8 @@ public class JWTFilter extends OncePerRequestFilter {
         }
 
         // Continuing the execution of the filter chain
-        System.out.println("before filter call");
+        log.info("before filter call");
         filterChain.doFilter(request, response); // send execute to next resource
-        System.out.println("after doing filter");
+        log.info("after doing filter");
     }
 }

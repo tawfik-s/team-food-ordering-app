@@ -2,7 +2,6 @@ package com.fawry.foodorderingapi.resources;
 
 import com.fawry.foodorderingapi.entity.Food;
 import com.fawry.foodorderingapi.model.FoodDto;
-import com.fawry.foodorderingapi.model.RestaurantDto;
 import com.fawry.foodorderingapi.service.FoodService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
@@ -24,7 +22,7 @@ public class FoodController {
 
     @PostMapping("toRestaurants/{restaurantId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Food addFood(@PathVariable Long restaurantId, @RequestBody FoodDto foodDto ){
+    public Food addFood(@Valid @PathVariable Long restaurantId, @RequestBody FoodDto foodDto ){
         log.info("added food={} to restaurant with id={} ", foodDto, restaurantId);
         return foodService.addFood(restaurantId, foodDto);
     }
@@ -38,14 +36,14 @@ public class FoodController {
 
     @GetMapping(path = "{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Food getById(@PathVariable  Long id){
+    public Food getById(@Valid @PathVariable  Long id){
         log.info("get food by id={} from database :", id);
         return foodService.getFoodById(id);
     }
 
     @PutMapping(path = "{foodId}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateFood(@PathVariable Long foodId, @RequestBody FoodDto foodDto){
+    public void updateFood(@Valid @PathVariable Long foodId, @RequestBody FoodDto foodDto){
         log.info("update food={} with id={} ", foodDto, foodId);
         foodService.updateFood(foodId,foodDto);
     }

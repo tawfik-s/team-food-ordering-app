@@ -1,5 +1,6 @@
 package com.fawry.foodorderingapi.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
-
+@Slf4j
 @Configuration // Marks this as a configuration file
 @EnableWebSecurity // Enables security for this application
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,17 +25,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception { // Method to configure your app security
-        System.out.println("inside security configuration");
+       log.info("inside security configuration");
         http.csrf().disable() // Disabling csrf
                 .httpBasic().disable() // Disabling http basic
                 .cors() // Enabling cors
                 .and()
                 .authorizeHttpRequests() // Authorizing incoming requests
-                .antMatchers("/api/auth/**").permitAll() // Allows auth requests to be made without authentication of any sort
-                .antMatchers("/api/restaurant/**").hasRole("USER") //Allows only users with the "USER" role to make requests to the user routes
-                .antMatchers("/api/order/**").hasRole("USER")
-                .antMatchers("/api/group/**").hasRole("USER")
-                .antMatchers("/api/food/**").hasRole("USER")
+                .antMatchers("auth/**").permitAll() // Allows auth requests to be made without authentication of any sort
+                .antMatchers("restaurants/**").hasRole("USER") //Allows only users with the "USER" role to make requests to the user routes
+                .antMatchers("groups/**").hasRole("USER")
+                .antMatchers("groups/{groupId}/orders/**").hasRole("USER")
+                .antMatchers("foods/**").hasRole("USER")
                 .and()
                 .userDetailsService(uds) // Setting the user details service to the custom implementation
                 .exceptionHandling()
