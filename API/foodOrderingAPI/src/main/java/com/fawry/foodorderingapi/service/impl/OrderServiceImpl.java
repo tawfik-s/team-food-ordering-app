@@ -51,7 +51,7 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
         for (FoodItemDto foodItemDto : orderDto.getFood()) {
             Food foodItem = foodService.getFoodById(foodItemDto.getItemId());
             order.getItems().add(new SubOrder(foodItemDto.getQuantity(), foodItem, order, foodItemDto.getComment(),
-                    foodItemDto.getQuantity() * foodItem.getPrice()));
+                    (float) (foodItemDto.getQuantity() * foodItem.getPrice())));
             foodRepo.saveAndFlush(foodItem);
         }
 
