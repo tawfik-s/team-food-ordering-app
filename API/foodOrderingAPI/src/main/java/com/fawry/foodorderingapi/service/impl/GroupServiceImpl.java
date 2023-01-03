@@ -65,15 +65,22 @@ public class  GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public void userJoinGroup(Long groupId, Long newUserId) {
-        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(()->new RecordNotFoundException("app group not found"));
-        AppUser appUser = userRepo.findById(newUserId).orElseThrow(()->new RecordNotFoundException("user not found"));
+        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(() -> new RecordNotFoundException("app group not found"));
+        AppUser appUser = userRepo.findById(newUserId).orElseThrow(() -> new RecordNotFoundException("user not found"));
         List<AppGroup> appGroups = appUser.getOwnedGroups()
                 .stream()
                 .filter(appGroup1 -> appGroup1.getId() == groupId)
                 .collect(Collectors.toList());
-        System.out.println(appGroups.isEmpty());
+        List<AppUser> users = appGroup.getUsersRequestToJoin()
+                .stream()
+                .filter(appUser1 -> appUser1.getId() == newUserId)
+                .collect(Collectors.toList());
+        List<AppUser> users1 = appGroup.getUsers()
+                .stream()
+                .filter(appUser1 -> appUser1.getId() == newUserId)
+                .collect(Collectors.toList());
         //TODO chick is admin group
-        if (appGroups.isEmpty()) {
+        if (appGroups.isEmpty() && users.isEmpty() && users1.isEmpty()) {
             if (appGroup.getAnyOneCanJoinWithoutRequest().equals("true")) {
                 appGroup.getUsers().add(appUser);
             } else {
@@ -111,6 +118,35 @@ public class  GroupServiceImpl implements GroupService {
             groupDTO.add(groupDTO1);
         }
         return groupDTO;
+    }
+
+    public GroupDTO getGroup(Long id) {
+        AppGroup group = groupRepo.findById(id).orElseThrow(() -> new RecordNotFoundException("app group not found"));
+        GroupDTO groupDTO = new GroupDTO(group.getId(), group.getTitle(), group.getAnyOneCanJoinWithoutRequest(), group.getGroupIsFinished(), group.getRestaurant(), group.getUsers(), group.getUsersRequestToJoin(), group.getOrder());
+
+        return groupDTO;
+    }
+
+    @Override
+    public boolean isAdmin(Long groupId, Long userId) {
+        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(() -> new RecordNotFoundException("app group not found"));
+        AppUser appUser = userRepo.findById(userId).orElseThrow(() -> new RecordNotFoundException("user not found"));
+        List<AppGroup> appGroups = appUser.getOwnedGroups()
+                .stream()
+                .filter(appGroup1 -> appGroup1.getId() == groupId)
+                .collect(Collectors.toList());
+        if (appGroups.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isGroupUser(Long groupId){
+
+        AppGroup appGroup = groupRepo.findById(groupId).orElseThrow(() -> new RecordNotFoundException("app group not found"));
+        AppUser currentUser=userService.getCurrentUser();
+        return appGroup.getUsers().contains(currentUser);
+
     }
 
 

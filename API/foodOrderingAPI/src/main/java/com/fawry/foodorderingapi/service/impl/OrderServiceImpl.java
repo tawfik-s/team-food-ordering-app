@@ -11,6 +11,7 @@ import com.fawry.foodorderingapi.repository.FoodRepo;
 import com.fawry.foodorderingapi.repository.OrderRepo;
 import com.fawry.foodorderingapi.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
 
     @Autowired
     private FoodRepo foodRepo;
+
     @Autowired
     private FoodService foodService;
 
@@ -35,6 +37,8 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
     @Autowired
     private AppGroupRepo groupRepo;
 
+
+
     @Transactional
     public Long createOrder(OrderDto orderDto, Long groupId) {
         Order order = new Order();
@@ -43,7 +47,6 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
         AppUser currentUser = userService.getCurrentUser();
         AppGroup currentGroup = groupRepo.findById(groupId)
                 .orElseThrow(() -> new RecordNotFoundException("Group Not Found"));
-        float count = 0;
 
         for (FoodItemDto foodItemDto : orderDto.getFood()) {
             Food foodItem = foodService.getFoodById(foodItemDto.getItemId());
@@ -51,6 +54,8 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
                     foodItemDto.getQuantity() * foodItem.getPrice()));
             foodRepo.saveAndFlush(foodItem);
         }
+
+        float count = 0;
         for (SubOrder subOrder : order.getItems()) {
             count += subOrder.getSubOrderPrice();
 
@@ -67,6 +72,7 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
         orderRepo.saveAndFlush(order);
         return (order.getId());
     }
+
 
     @Override
     @Transactional
@@ -85,11 +91,13 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
         return currentGroup.getId();
     }
 
+
     public void deleteOrder(Long id) {
 
         orderRepo.deleteById(id);
 
     }
+
 
     public List<Order> getAllOrdersForCurrentUser() {
 
@@ -97,15 +105,19 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
         return currentUser.getOrders();
     }
 
+
     public List<Order> getAllGroupOrders(Long groupId) {
 
         return orderRepo.findByGroupId(groupId);
 
     }
 
+
     public List<ItemOrderSummaryDto> getOrderSummaryPerItem(Long groupId) {
+
         return orderRepo.filterNative(groupId);
     }
+
 
     @Transactional
     public List<UserOrderSummaryDto> getOrderSummaryPerUser(Long groupId) {
@@ -130,5 +142,7 @@ public class OrderServiceImpl implements com.fawry.foodorderingapi.service.Order
 
         return listOfUserOrderSummary;
     }
+
+
 
 }

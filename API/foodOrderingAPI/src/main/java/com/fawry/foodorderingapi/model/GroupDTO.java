@@ -43,12 +43,12 @@ public class GroupDTO {
         this.restaurant = restaurant;
         Users = new ArrayList<>();
         for (AppUser user : users) {
-            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
+            UsersDto usersDto = new UsersDto(user.getId(),user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
             this.Users.add(usersDto);
         }
         this.UsersRequestToJoin = new ArrayList<>();
         for (AppUser user : usersRequestToJoin) {
-            UsersDto usersDto = new UsersDto(user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
+            UsersDto usersDto = new UsersDto(user.getId(),user.getName(), user.getPhone(), user.getPassword(), user.getEmail());
             this.UsersRequestToJoin.add(usersDto);
         }
         this.order = order;
