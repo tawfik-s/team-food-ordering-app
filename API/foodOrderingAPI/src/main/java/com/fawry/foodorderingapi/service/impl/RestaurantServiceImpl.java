@@ -16,9 +16,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private RestaurantRepo restaurantRepo;
 
+    @Autowired
+    private RestaurantMapper restaurantMapper;
     @Override
     public Restaurant addRestaurant(RestaurantDto restaurantDto) {
-      Restaurant restaurant = RestaurantMapper.INSTANCE.toEntity(restaurantDto);
+      Restaurant restaurant = restaurantMapper.toEntity(restaurantDto);
       return restaurantRepo.save(restaurant);
     }
 
