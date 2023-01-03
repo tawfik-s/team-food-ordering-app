@@ -19,4 +19,6 @@ public class NewGroupDTO {
 
     private Long restaurantId;
 
+
+
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface FoodService {
 
-    public Food addFood(FoodDto foodDto , RestaurantDto restaurantDto);
+    public Food addFood(Long restaurantId, FoodDto foodDto);
 
     public List<Food> getAll();
 
