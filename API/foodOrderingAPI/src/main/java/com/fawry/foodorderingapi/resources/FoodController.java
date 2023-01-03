@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 
@@ -21,11 +22,11 @@ public class FoodController {
     @Autowired
     private FoodService foodService;
 
-    @PostMapping()
+    @PostMapping("toRestaurants/{restaurantId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Food addFood(@RequestBody FoodDto foodDto , @RequestBody RestaurantDto  restaurantDto){
-        log.info("added food={} to restaurant with id={} ", foodDto, restaurantDto.getId());
-        return foodService.addFood(foodDto , restaurantDto);
+    public Food addFood(@PathVariable Long restaurantId, @RequestBody FoodDto foodDto ){
+        log.info("added food={} to restaurant with id={} ", foodDto, restaurantId);
+        return foodService.addFood(restaurantId, foodDto);
     }
 
     @GetMapping
@@ -37,7 +38,7 @@ public class FoodController {
 
     @GetMapping(path = "{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Food getById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
+    public Food getById(@PathVariable  Long id){
         log.info("get food by id={} from database :", id);
         return foodService.getFoodById(id);
     }
@@ -51,7 +52,7 @@ public class FoodController {
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteFood(@PathVariable @Min(value = 1, message = "Element Not Found") Long id){
+    public void deleteFood(@Valid @PathVariable  Long id){
         log.info("delete food with id={} from database", id);
         foodService.deleteFood(id);
     }

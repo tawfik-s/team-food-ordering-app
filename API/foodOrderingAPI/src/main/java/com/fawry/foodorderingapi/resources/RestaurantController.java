@@ -36,16 +36,16 @@ public class RestaurantController {
         return restaurantService.getAll();
     }
 
-    @GetMapping("/{id}/get")
+    @GetMapping(path = "id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Restaurant getRestaurantById(@RequestParam @Min(value = 1, message = "enter valid number") Long id){
+    public Restaurant getRestaurantById(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
         log.info("get restaurant with id={} from database", id);
         return restaurantService.getRestaurantById(id);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("{name}")
     @ResponseStatus(HttpStatus.OK)
-    public Restaurant getRestaurantByName(@RequestParam  String name){
+    public Restaurant getRestaurantByName(@PathVariable  String name){
         log.info("get restaurant with name={} from database", name);
         return restaurantService.getRestaurantByName(name);
     }

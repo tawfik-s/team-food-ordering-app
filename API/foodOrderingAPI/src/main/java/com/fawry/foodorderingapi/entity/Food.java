@@ -1,20 +1,15 @@
 package com.fawry.foodorderingapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,11 +17,10 @@ public class Food {
 
     private String name;
 
-    private float price;
+    private double price;
 
     private String image;
-
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(cascade = ALL)
     @JsonIgnore
     private Restaurant restaurant;
 }
