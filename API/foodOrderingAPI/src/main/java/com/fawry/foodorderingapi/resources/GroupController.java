@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,5 +79,26 @@ public class GroupController {
         groupService.userJoinGroup(askToJoinGroupDTO.getGroupId(),appUser.getId());
     }
 
+
+    @GetMapping(path = "{id}")
+    public GroupDTO getOneGroup(@PathVariable @Min(value = 1, message = "enter valid number") Long id){
+
+        return groupService.getGroup(id);
+    }
+
+    @GetMapping(path = "/isAdmin/{id}")
+    public boolean is_Admin(@PathVariable @Min(value = 1, message = "enter valid number") Long id ){
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(email);
+        AppUser appUser = appUserRepo.findByEmail(email)
+                .orElseThrow(() -> new RecordNotFoundException("you are not authorized to add group"));
+        return groupService.isAdmin(id,appUser.getId());
+    }
+
+    @GetMapping(path = "/isGroupUser/{groupId}")
+    public boolean isGroupUser(@PathVariable Long groupId){
+
+        return groupService.isGroupUser(groupId);
+    }
 
 }

@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -56,7 +57,7 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(user.getEmail());
 
-        return Collections.singletonMap("jwt-token", token);
+        return Collections.singletonMap("jwt", token);
     }
 
     @PostMapping("/login")
@@ -70,7 +71,7 @@ public class AuthController {
 
             String token = jwtUtil.generateToken(body.getEmail());
 
-            return Collections.singletonMap("jwt-token", token);
+            return Collections.singletonMap("jwt", token);
         } catch (AuthenticationException authExc) {
             throw new RuntimeException("Invalid Login Credentials");
         }

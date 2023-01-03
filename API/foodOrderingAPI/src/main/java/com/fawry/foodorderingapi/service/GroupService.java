@@ -19,4 +19,13 @@ public interface GroupService {
 
     public List<GroupDTO> getAvailableGroups();
 
+    public GroupDTO getGroup(Long id);
+
+    public boolean isAdmin(Long groupId, Long userId);
+
+    public boolean isGroupUser(Long groupId);
+
+
+
+
 }
